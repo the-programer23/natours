@@ -1,0 +1,17 @@
+extends baseEmail
+block content
+  p Hola #{firstName},
+  p Bienvenido a Natours, nos alegra tenerte 🎉🙏
+  p Aquí somos una gran familia, así que asegúrese de subir tu foto de usuario para que podamos conocerte un poco mejor.
+  table.btn.btn-primary(role='presentation', border='0', cellpadding='0', cellspacing='0')
+    tbody
+      tr
+        td(align='left')
+          table(role='presentation', border='0', cellpadding='0', cellspacing='0')
+            tbody
+              tr
+                td
+                  a(href=`${url}`, target='_blank') Subir foto de usuario
+  br                
+  p Si necesita ayuda para reservar su próximo tour, ¡no dude en ponerse en contacto conmigo!
+  p - Fabian Pinzon, CEO

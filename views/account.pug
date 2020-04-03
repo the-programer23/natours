@@ -1,0 +1,68 @@
+extends base
+
+mixin navItem(link, text, icon, active)
+  li(class=`${active ? 'side-nav--active' : ''}`)
+    a(href=`${link}`)
+      svg
+        use(xlink:href=`img/icons.svg#icon-${icon}`)
+      | #{text}
+
+block content
+  main.main
+    .user-view
+      nav.user-view__menu
+        ul.side-nav
+          +navItem('#', 'Configuración', 'settings', true)
+          +navItem('my-bookings', 'Mis reservas', 'briefcase')
+          +navItem('#', 'Mis opiniones', 'star')
+          +navItem('#', 'Facturación', 'credit-card')
+        - if(user.role === 'admin')  
+          .admin-nav
+            h5.admin-nav__heading Administrador
+            ul.side-nav
+              +navItem('#', 'Administrar tours', 'map')
+              +navItem('#', 'Administrar usuarios', 'users')
+              +navItem('#', 'Administrar opiniones', 'star')
+              +navItem('#', 'Administrar reservas', 'briefcase')
+
+      .user-view__content
+        .user-view__form-container
+          h2.heading-secondary.ma-bt-md Configuración de tu cuenta
+
+          //- WITHOUT API 
+          //- enctype='multipart/form-data' allo us to tupload files with the form
+          //- form.form.form-user-data(action='/submit-user-data' method='POST' enctype='multipart/form-data')
+
+          //- WITH API
+          form.form.form-user-data
+            .form__group
+              label.form__label(for='name') Nombre
+              input#name.form__input(type='text', value=`${user.name}`, required, name='name')
+            .form__group.ma-bt-md
+              label.form__label(for='email') Correo electrónico
+              input#email.form__input(type='email', value=`${user.email}`, required, name='email')
+            .form__group.form__photo-upload
+              img.form__user-photo(src=`/img/users/${user.photo}`, alt='User photo')
+              // this input allow us to upload imagenes, the name attribute is photo because its 
+              // the name of the of the field in the User document and it's use by multer
+              input.form_upload(type='file', accept='image/*', id='photo', name='photo')
+              label(for='photo') Actualizar foto
+            .form__group.right
+              button.btn.btn--small.btn--green Guardar cambios
+
+        .line &nbsp;
+        
+        .user-view__form-container
+          h2.heading-secondary.ma-bt-md Cambiar contraseña
+          form.form.form-user-password
+            .form__group
+              label.form__label(for='password-current') Contraseña actual
+              input#password-current.form__input(type='password', placeholder='••••••••', required, minlength='8')
+            .form__group
+              label.form__label(for='password') Nueva contraseñas
+              input#password.form__input(type='password', placeholder='••••••••', required, minlength='8', autocomplete="none")
+            .form__group.ma-bt-lg
+              label.form__label(for='password-confirm') Confirmar contraseña
+              input#password-confirm.form__input(type='password', placeholder='••••••••', required, minlength='8', autocomplete="none")
+            .form__group.right
+              button.btn.btn--small.btn--green.btn--save-password Guardar contraseña
