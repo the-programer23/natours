@@ -19,18 +19,17 @@ const signToken = id => {
   );
 };
 
-const createSendToken = (user, statusCode, res) => {
+const createSendToken = (user, statusCode, req, res) => {
   const token = signToken(user._id);
 
   const cookieOptions = {
     expires: new Date(
       Date.now() + process.env.JWT_COOKIE_EXPIRES_IN * 24 * 60 * 60 * 1000
     ),
-    httpOnly: true
+    httpOnly: true,
+    secure: req.secure || req.headers['x-forwarded-proto'] === 'https'
   };
-  if (process.env.NODE_ENV === 'production') {
-    cookieOptions.secure = true;
-  }
+
   res.cookie('jwt', token, cookieOptions);
 
   //Remove the user password from the output
@@ -65,7 +64,7 @@ exports.signup = catchASync(async (req, res, next) => {
   });
   const url = `${req.protocol}://${req.get('host')}/me`
   await new Email(newUser, url).sendWelcome()
-  createSendToken(newUser, 201, res);
+  createSendToken(newUser, 201, req, res);
 });
 
 // This function renders pages only, it's not for errors
@@ -121,7 +120,7 @@ exports.login = catchASync(async (req, res, next) => {
   if (!user || !(await user.correctPassword(password, user.password))) {
     return next(new AppError('Email o contraseña invalido', 401));
   }
-  createSendToken(user, 200, res);
+  createSendToken(user, 200, req, res);
 });
 
 exports.protect = catchASync(async (req, res, next) => {
@@ -247,7 +246,7 @@ exports.resetPassword = catchASync(async (req, res, next) => {
   //3) Update passwordChangedAt property for the user with the new
 
   //4) Log User in, send JWT
-  createSendToken(user, 200, res);
+  createSendToken(user, 200, req, res);
 });
 
 exports.updatePassword = catchASync(async (req, res, next) => {
@@ -266,5 +265,5 @@ exports.updatePassword = catchASync(async (req, res, next) => {
 
   await user.save();
   //4)Log user in, send jwt
-  createSendToken(user, 200, res);
+  createSendToken(user, 200, req, res);
 });
