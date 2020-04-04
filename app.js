@@ -13,9 +13,10 @@ const globalErrorHandler = require('./controllers/errorController');
 const tourRouter = require('./routes/tourRoutes');
 const userRouter = require('./routes/userRoutes');
 const reviewRouter = require('./routes/reviewRoutes');
-const bookingRouter = require('./routes/bookingRoutes')
+const bookingRouter = require('./routes/bookingRoutes');
 const viewRouter = require('./routes/viewRoutes');
 
+// Start app
 const app = express();
 
 app.set('view engine', 'pug');
@@ -34,7 +35,7 @@ if (process.env.NODE_ENV === 'development') {
 const limiter = rateLimit({
   max: 100,
   windowMs: 60 * 60 * 1000,
-  message: 'demasiadas solicitudes de esta ip, intente nuevamente en una hora.'
+  message: 'demasiadas solicitudes de esta ip, intente nuevamente en una hora.',
 });
 
 app.use('/api', limiter);
@@ -42,14 +43,16 @@ app.use('/api', limiter);
 // Body parser, reading data from body into req.body
 app.use(
   express.json({
-    limit: '10kb'
+    limit: '10kb',
   })
 );
 // This code allows us to get the form input data from the browser in req.body
-app.use(express.urlencoded({
-  extended: true,
-  limit: '10kb'
-}));
+app.use(
+  express.urlencoded({
+    extended: true,
+    limit: '10kb',
+  })
+);
 
 app.use(cookieParser());
 
@@ -68,8 +71,8 @@ app.use(
       'ratingsQuantity',
       'maxGroupSize',
       'difficulty',
-      'price'
-    ]
+      'price',
+    ],
   })
 );
 
@@ -85,7 +88,7 @@ app.use('/', viewRouter);
 app.use('/api/v1/tours', tourRouter);
 app.use('/api/v1/users', userRouter);
 app.use('/api/v1/reviews', reviewRouter);
-app.use('/api/v1/bookings', bookingRouter)
+app.use('/api/v1/bookings', bookingRouter);
 
 app.all('*', (req, res, next) => {
   // const err = new Error(
