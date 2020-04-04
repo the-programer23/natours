@@ -8,7 +8,7 @@ const router = express.Router();
 // App.use(middleware) executes the middleware for all the routes below
 // router.use(authController.isLoggedIn);
 
-router.get('/', bookingController.createBookingCheckout, authController.isLoggedIn, viewsController.getOverview);
+router.get('/', authController.isLoggedIn, viewsController.getOverview);
 router.get('/tour/:tourSlug', authController.isLoggedIn, viewsController.getTour);
 router.get('/login', authController.isLoggedIn, viewsController.getLoginForm);
 router.get('/me', authController.protect, viewsController.getAccount);
