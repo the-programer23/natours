@@ -8,6 +8,7 @@ const rateLimit = require('express-rate-limit');
 const xss = require('xss-clean');
 const cookieParser = require('cookie-parser');
 const compression = require('compression');
+const cors = require('cors');
 
 const AppError = require('./utils/appError.js');
 const globalErrorHandler = require('./controllers/errorController');
@@ -26,6 +27,12 @@ app.set('view engine', 'pug');
 app.set('views', path.join(__dirname, 'views'));
 
 // 1) GLOBAL MIDDLEWARE
+// Implement CORS - // Access-Control-Allow-Origin * (* means all)
+app.use(cors());
+
+app.options('*', cors());
+// app.options('/api/v1/tours/:id', cors());
+
 // Serving static files
 app.use(express.static(path.join(__dirname, 'public')));
 // Set security http headers
@@ -79,7 +86,7 @@ app.use(
   })
 );
 
-app.use(compression())
+app.use(compression());
 
 // Testing middleware
 app.use((req, res, next) => {
