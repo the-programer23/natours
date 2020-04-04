@@ -39,7 +39,7 @@ module.exports = class Email {
             url: this.url,
             subject
         });
-        console.log('this.url', this.url)
+
         // 2) Define email options
         const mailOptions = {
             from: this.from,

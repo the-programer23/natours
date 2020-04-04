@@ -54,12 +54,10 @@ exports.deleteOne = Model => catchAsync(async (req, res, next) => {
 });
 
 exports.updateOne = Model => catchAsync(async (req, res, next) => {
-    console.log('hello from updateOne function')
     const doc = await Model.findByIdAndUpdate(req.params.id, req.body, {
         new: true,
         runValidators: true
     });
-    console.log(req.params.id)
 
     if (!doc) {
         return next(new AppError('No se encontró ningún documento con ese id', 404));

@@ -37,7 +37,6 @@ const sendErrorDev = (err, req, res) => {
         });
     }
     // Rendered website
-    console.log('Error', err)
     return res.status(err.statusCode).render('error', {
         title: 'Algo salio mal',
         msg: err.message

@@ -7,6 +7,7 @@ const morgan = require('morgan');
 const rateLimit = require('express-rate-limit');
 const xss = require('xss-clean');
 const cookieParser = require('cookie-parser');
+const compression = require('compression');
 
 const AppError = require('./utils/appError.js');
 const globalErrorHandler = require('./controllers/errorController');
@@ -75,6 +76,8 @@ app.use(
     ],
   })
 );
+
+app.use(compression())
 
 // Testing middleware
 app.use((req, res, next) => {
