@@ -9,12 +9,12 @@ const factory = require('./handlerFactory');
 exports.getCheckoutSession = catchAsync(async (req, res, next) => {
     // 1)Get Currently booked tour
     const tour = await Tour.findById(req.params.tourId);
-    console.log(tour);
+
     // 2) Create checkout session
     const session = await stripe.checkout.sessions.create({
         payment_method_types: ['card'],
         // success_url: `${req.protocol}://${req.get('host')}/my-tours/?tour=${req.params.tourId}&user=${req.user.id}&price=${tour.price}`,
-        success_url: `${req.protocol}://${req.get('host')}/my-bookings?alert=bookings`,
+        success_url: `${req.protocol}://${req.get('host')}/my-bookings?alert=booking`,
         cancel_url: `${req.protocol}://${req.get('host')}/tour/${tour.slug}`,
         customer_email: req.user.email,
         client_reference_id: req.params.tourId,
@@ -31,7 +31,7 @@ exports.getCheckoutSession = catchAsync(async (req, res, next) => {
             quantity: 1,
         }, ],
     });
-    console.log(session);
+
     // 3) Create session as response
     res.status(200).json({
         status: 'success',
@@ -57,8 +57,7 @@ exports.getCheckoutSession = catchAsync(async (req, res, next) => {
 // });
 
 const createBookingCheckout = async (session) => {
-    console.log('createBookingCheckout');
-    console.log(session);
+
     const tour = session.client_reference_id;
 
     // here we grab only the user Id
@@ -66,7 +65,6 @@ const createBookingCheckout = async (session) => {
         email: session.customer_email,
     })).id
 
-    console.log(user);
     const price = session.display_items[0].amount / 100;
 
     const booking = await Booking.create({
@@ -74,11 +72,10 @@ const createBookingCheckout = async (session) => {
         user,
         price,
     });
-    console.log(booking);
 };
 
 exports.webhookCheckout = (req, res, next) => {
-    console.log('webhookCheckout');
+
     const signature = req.headers['stripe-signature'];
     let event;
 
@@ -91,7 +88,6 @@ exports.webhookCheckout = (req, res, next) => {
     } catch (err) {
         return res.status(400).send(`Webhook error: ${err.message}`);
     }
-    console.log('try success');
 
     if (event.type === 'checkout.session.completed') {
         createBookingCheckout(event.data.object);

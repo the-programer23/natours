@@ -11,8 +11,7 @@ exports.alerts = (req, res, next) => {
     console.log(alert)
 
     if (alert === 'booking') {
-        res.locals.alert =
-            "Su reserva fue exitosa, por favor verifica tu email para confirmarlo. Si su reserva no apararece aquí inmediatamente, por favor refresca esta página en unos instantes"
+        res.locals.alert = "Su reserva fue exitosa, por favor verifica tu email para confirmarlo. Si su reserva no apararece aquí inmediatamente, por favor refresca esta página en unos instantes"
     }
     next();
 }
