@@ -7,7 +7,7 @@ const AppError = require('../utils/appError');
 exports.alerts = (req, res, next) => {
     const {
         alert
-    } = req.body
+    } = req.query
     console.log(alert)
 
     if (alert === 'booking') {
