@@ -76,6 +76,5 @@ if (bookBtn)
         const {
             tourId
         } = e.target.dataset
-        console.log(tourId)
         bookTour(tourId)
     })
