@@ -2,7 +2,20 @@ const User = require('../models/userModel');
 const Booking = require('../models/bookingModel')
 const Tour = require('../models/tourModel');
 const catchAsync = require('../utils/catchAsync');
-const AppError = require('../utils/appError')
+const AppError = require('../utils/appError');
+
+exports.alerts = (req, res, next) => {
+    const {
+        alert
+    } = req.body
+    console.log(alert)
+
+    if (alert === 'booking') {
+        res.locals.alert =
+            "Su reserva fue exitosa, por favor verifica tu email para confirmarlo. Si su reserva no apararece aquí inmediatamente, por favor refresca esta página en unos instantes"
+    }
+    next();
+}
 
 exports.getOverview = catchAsync(async (req, res, next) => {
     // 1) Get Tours data from collection

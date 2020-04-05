@@ -1,7 +1,11 @@
 import {
+    showAlert
+} from './alert'
+
+import {
     login,
     logout
-} from './login';
+} from './login'
 
 import {
     displayMap
@@ -78,3 +82,7 @@ if (bookBtn)
         } = e.target.dataset
         bookTour(tourId)
     })
+
+const alertMessage = document.querySelector('body').dataset.alert
+console.log(alertMessage)
+if (alertMessage) showAlert('success', alertMessage, 20)
