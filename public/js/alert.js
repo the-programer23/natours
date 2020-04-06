@@ -4,10 +4,10 @@ export const hideAlert = () => {
     if (el) el.parentElement.removeChild(el);
 }
 
-// type is success or error, time = 5 where 5 is in seconds and time * 1000 to convertir to 
+// type is success or error, time = 7 where 7 is in seconds and time * 1000 to convertir to 
 // milliseconds
 export const showAlert = (type, msg, time = 7) => {
-    hideAlert()
+    // hideAlert()
     const markup = `<div class="alert alert--${type}">${msg}</div>`;
     document.querySelector('body').insertAdjacentHTML('afterbegin', markup);
     window.setTimeout(hideAlert, time * 1000);

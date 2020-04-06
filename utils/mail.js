@@ -5,7 +5,7 @@ const htmlToText = require('html-to-text');
 module.exports = class Email {
     constructor(user, url) {
         (this.to = user.email),
-        (this.firstName = user.name.split(' ')[0]),
+        (this.firstName = user.firstName),
         (this.url = url),
         (this.from = `Fabian Pinzon <${process.env.EMAIL_FROM}>`);
     }
@@ -36,8 +36,7 @@ module.exports = class Email {
         // 1) Render html based on pug template
         const html = pug.renderFile(`${__dirname}/../views/email/${template}.pug`, {
             firstName: this.firstName,
-            url: this.url,
-            subject
+            url: this.url
         });
 
         // 2) Define email options

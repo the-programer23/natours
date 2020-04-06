@@ -36,17 +36,23 @@ block content
           //- WITH API
           form.form.form-user-data
             .form__group
-              label.form__label(for='name') Nombre
-              input#name.form__input(type='text', value=`${user.name}`, required, name='name')
+              label.form__label(for='firstName') Nombre
+              input#firstName.form__input(type='text', value=`${user.firstName}`, required, name='firstName')
+            .form__group
+              label.form__label(for='lastName') Apellido
+              input#lastName.form__input(type='text', value=`${user.lastName}`, required, name='lastName')  
             .form__group.ma-bt-md
               label.form__label(for='email') Correo electrónico
               input#email.form__input(type='email', value=`${user.email}`, required, name='email')
-            .form__group.form__photo-upload
+            .form__group.ma-bt-md
+              label.form__label(for='travelAgencyName') Nombre de su agencia de viajes
+              input#travelAgencyName.form__input(type='text', value=`${user.travelAgencyName}`, required, name='email')
+            .form__group
               img.form__user-photo(src=`/img/users/${user.photo}`, alt='User photo')
               // this input allow us to upload imagenes, the name attribute is photo because its 
               // the name of the of the field in the User document and it's use by multer
-              input.form_upload(type='file', accept='image/*', id='photo', name='photo')
-              label(for='photo') Actualizar foto
+              label(for='photo' class="form__label") Actualizar foto
+              input.form_upload(type='file', accept='image/*', id='photo', name='photo' class='form__photo__button')
             .form__group.right
               button.btn.btn--small.btn--green Guardar cambios
 

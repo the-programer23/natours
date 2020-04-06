@@ -14,7 +14,8 @@ router.get('/', authController.isLoggedIn, viewsController.getOverview);
 router.get('/tour/:tourSlug', authController.isLoggedIn, viewsController.getTour);
 router.get('/login', authController.isLoggedIn, viewsController.getLoginForm);
 router.get('/me', authController.protect, viewsController.getAccount);
-router.get('/my-bookings', authController.protect, viewsController.getMyTours)
+router.get('/my-bookings', authController.protect, viewsController.getMyTours);
+router.get('/signup', viewsController.getSignupForm);
 router.post('/submit-user-data', authController.protect, viewsController.updateUserData);
 
 

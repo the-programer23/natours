@@ -3,6 +3,10 @@ import {
 } from './alert'
 
 import {
+    signup
+} from './signup'
+
+import {
     login,
     logout
 } from './login'
@@ -20,6 +24,7 @@ import {
 
 // DOM ELEMENTS
 const mapBox = document.getElementById('map');
+const signupForm = document.querySelector('.form--signup');
 const logInForm = document.querySelector('.form--login');
 const logoutBtn = document.querySelector('.nav__el--logout');
 const userDataForm = document.querySelector('.form-user-data');
@@ -31,6 +36,19 @@ if (mapBox) {
     const locations = JSON.parse(mapBox.dataset.locations);
     displayMap(locations)
 };
+
+if (signupForm) {
+    signupForm.addEventListener('submit', e => {
+        e.preventDefault();
+        const firstName = document.getElementById('firstName').value;
+        const lastName = document.getElementById('lastName').value;
+        const email = document.getElementById('email').value;
+        const travelAgencyName = document.getElementById('travelAgencyName').value;
+        const password = document.getElementById('password').value;
+        const confirmPassword = document.getElementById('confirmPassword').value;
+        signup(firstName, lastName, email, travelAgencyName, password, confirmPassword)
+    });
+}
 
 if (logInForm) {
 
@@ -49,9 +67,12 @@ if (userDataForm)
     userDataForm.addEventListener('submit', e => {
         e.preventDefault();
         const form = new FormData();
-        form.append('name', document.getElementById('name').value)
+        form.append('firstName', document.getElementById('firstName').value)
+        form.append('lastName', document.getElementById('lastName').value)
         form.append('email', document.getElementById('email').value)
+        form.append('travelAgencyName', document.getElementById('travelAgencyName').value)
         form.append('photo', document.getElementById('photo').files[0])
+        // this passes name, email and photo values to axios and it put them in req.body for example req.body.name ...
         updateSettings(form, 'datos');
     });
 
@@ -83,6 +104,7 @@ if (bookBtn)
         bookTour(tourId)
     })
 
+// the alertMessage variable gets the body attribite data-alert which is base.pug file 
 const alertMessage = document.querySelector('body').dataset.alert;
-console.log(alertMessage)
-if (alertMessage) showAlert('success', alertMessage, 20)
+
+if (alertMessage) showAlert('success', alertMessage, 2000)

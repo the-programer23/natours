@@ -1,0 +1,32 @@
+extends base
+
+block content
+     main.main
+        .signup-login-form
+            h2.heading-secondary.ma-bt-lg ¡Hola! completa tus datos
+            form.form.form--signup
+                .form__group
+                    label.form__label(for='name') Nombre 
+                    input#firstName.form__input(type='name', required)
+                .form__group
+                    label.form__label(for='lastName') Apellido 
+                    input#lastName.form__input(type='name', required)
+                .form__group
+                    label.form__label(for='email') Email 
+                    input#email.form__input(type='email', placeholder='tu@ejemplo.com', required)
+                .form__group
+                    label.form__label(for='travelAgencyName') Nombre de tu agencia de viajes 
+                    input#travelAgencyName.form__input(type='text', required)   
+                .form__group
+                    label.form__label(for='password') Clave
+                    input#password.form__input(type='password', placeholder='••••••••', required, minlength='8')
+                .form__group.ma-bt-md
+                    label.form__label(for='password') Confirme su clave
+                    input#confirmPassword.form__input(type='password', placeholder='••••••••', required, minlength='8')
+                .form__group
+                    button.btn.btn--green Crear cuenta
+                    <div class='tyc-layout'> Al registrarme, declaro que soy mayor de edad y acepto los <a target='_blank' href='#'> Términos y condiciones</a> y las <a target='_blank' href='#'>Políticas de privacidad</a> de Natours</div>
+                        
+                        
+                               
+                            

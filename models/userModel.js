@@ -4,9 +4,13 @@ const mongoose = require('mongoose');
 const validator = require('validator');
 
 const userSchema = new mongoose.Schema({
-  name: {
+  firstName: {
     type: String,
     required: [true, 'Por favor ingresa tu nombre']
+  },
+  lastName: {
+    type: String,
+    required: [true, 'Por favor ingresa tu apellido']
   },
   email: {
     type: String,
@@ -15,6 +19,10 @@ const userSchema = new mongoose.Schema({
     unique: true,
     validate: [validator.isEmail, 'Por favor ingresa un email válido']
   },
+  travelAgencyName: {
+    type: String,
+    required: [true, 'Por favor ingresa el nombre de tu agencia de viajes']
+  },
   photo: {
     type: String,
     default: 'default.jpg'
@@ -22,7 +30,7 @@ const userSchema = new mongoose.Schema({
   role: {
     type: String,
     enum: ['user', 'guide', 'lead-guide', 'admin'],
-    default: 'user'
+    default: 'admin'
   },
   password: {
     type: String,

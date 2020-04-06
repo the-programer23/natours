@@ -1,4 +1,3 @@
-/* eslint-disable */
 import '@babel/polyfill';
 import axios from 'axios';
 import {
@@ -17,7 +16,7 @@ export const login = async (email, password) => {
     });
 
     if (res.data.status === 'success') {
-      showAlert('success', 'Acceso concedido, bienvenido');
+      showAlert('success', `Acceso concedido, bienvenido`);
       window.setTimeout(() => {
         location.assign('/');
       }, 1500);

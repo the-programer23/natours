@@ -6,12 +6,17 @@ const AppError = require('../utils/appError');
 
 exports.alerts = (req, res, next) => {
     const {
-        alert
+        alert,
+        name,
+        email
     } = req.query
-    console.log(alert)
 
     if (alert === 'booking') {
         res.locals.alert = "Su reserva fue exitosa, por favor verifica tu email para confirmarlo. Si su reserva no apararece aquí inmediatamente, por favor refresca esta página en unos instantes"
+    }
+
+    if (alert === 'signup') {
+        res.locals.alert = `Muy bien, ${name}. ¡Ya te registraste! Ahora verifica la bandeja de entrada de tu e-mail ${email} o en Spam para confirmar tu cuenta`
     }
     next();
 }
@@ -72,6 +77,12 @@ exports.getLoginForm = (req, res) => {
         title: 'Ingresa a tu Cuenta'
     })
 };
+
+exports.getSignupForm = (req, res) => {
+    res.status(200).render('signup', {
+        title: 'Registrate en Yourtravelagency'
+    })
+}
 
 exports.getAccount = (req, res) => {
     res.status(200).render('account', {

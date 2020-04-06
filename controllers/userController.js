@@ -4,6 +4,7 @@ const AppError = require('./../utils/appError');
 const catchAsync = require('./../utils/catchAsync');
 const User = require('./../models/userModel');
 const factory = require('./handlerFactory');
+const Email = require('../utils/mail');
 
 const filterObj = (obj, ...allowedFields) => {
   const newObj = {};
@@ -75,15 +76,21 @@ exports.updateMe = catchAsync(async (req, res, next) => {
   }
 
   //2) Filtered out unwated fields names that are not allowed to be updated
-  const filteredBody = filterObj(req.body, 'name', 'email');
-  //filteredBody.photo adds photo propety to filteredBody and set it = to  req.file.filename
-  if (req.file) filteredBody.photo = req.file.filename;
-
+  const filteredBody = filterObj(req.body, 'firstName', 'lastName', 'email', 'travelAgencyName');
+  // this is like saying filteredBody = { name: req.body.name, email: req.body.email }
+  //filteredBody.photo adds photo propety to filteredBody object and set it = to  req.file.filename 
+  //{ name: req.body.name, email: req.body.email, photo: req.file.filename  }
+  if (req.file) {
+    filteredBody.photo = req.file.filename;
+  }
   //3) Update user document
   const updatedUser = await User.findByIdAndUpdate(req.user.id, filteredBody, {
     new: true,
     runValidators: true
   });
+  // if (updatedUser) {
+  //   await new Email(updatedUser, )
+  // }
 
   res.status(200).json({
     status: 'success',
