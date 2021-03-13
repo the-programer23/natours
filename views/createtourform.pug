@@ -1,0 +1,35 @@
+extends accountbase
+
+block accountBaseContent
+    .createTour__form-content
+        .createTour__form-container
+            .createTour-form
+                h2.heading-secondary.ma-bt-lg Completa los datos del tour
+                form.form.form-createTour
+                    .form__group
+                        label.form__label(for='name') Nombre del tour
+                        input#name.form__input(type='text', required)
+                    .form__group
+                        label.form__label(for='duration') Duración del tour en días 
+                        input#duration.form__input(type="number", required)
+                    .form__group
+                        label.form__label(for='maxGroupSize') Tamaño máximo del grupo de personas
+                        input#maxGroupSize.form__input(type="number", required)
+                    .form__group
+                        label.form__label(for='difficulty') Nivel de dificultad (Opcional)
+                        input#difficulty.form__input(type='text', placeholder='fácil, medio o difícil')   
+                    .form__group
+                        label.form__label(for='price') Precio
+                        input#price.form__input(type="number", required)
+                    .form__group
+                        label.form__label(for='summary') Descripción corta del tour
+                        textarea#summary.form__input(type='text', required)
+                    .form__group
+                        label.form__label(for='description') Descripción completa del tour
+                        textarea#description.form__input(type='text', rows="8", required)
+                    //- .form__group
+                    //-     label(for='imageCover' class="form__label") Imagen de cubierta
+                    //-     img.form__image-cover(src='/img/tours/image-cover-default.png', alt='Tour image cover')   
+                    //-     input.form_upload(type='file', accept='image/*', id='imageCover', name='imageCover')    
+                    .form__group.right
+                        button.btn.btn--small.btn--green Publicar tour

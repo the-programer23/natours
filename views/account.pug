@@ -12,63 +12,56 @@ block content
     .user-view
       nav.user-view__menu
         ul.side-nav
-          +navItem('#', 'Configuración', 'settings', true)
-          +navItem('my-bookings', 'Mis reservas', 'briefcase')
-          +navItem('#', 'Mis opiniones', 'star')
-          +navItem('#', 'Facturación', 'credit-card')
-        - if(user.role === 'admin')  
+          +navItem('#', 'Settings', 'settings', true)
+          +navItem('/my-tours', 'My bookings', 'briefcase')
+          +navItem('#', 'My reviews', 'star')
+          +navItem('#', 'Billing', 'credit-card')
+
+        - if (user.role === 'admin')
           .admin-nav
-            h5.admin-nav__heading Administrador
+            h5.admin-nav__heading Admin
             ul.side-nav
-              +navItem('#', 'Administrar tours', 'map')
-              +navItem('#', 'Administrar usuarios', 'users')
-              +navItem('#', 'Administrar opiniones', 'star')
-              +navItem('#', 'Administrar reservas', 'briefcase')
+              +navItem('#', 'Manage tours', 'map')
+              +navItem('#', 'Manage users', 'users')
+              +navItem('#', 'Manage reviews', 'star')
+              +navItem('#', 'Manage bookings', 'briefcase')
 
       .user-view__content
         .user-view__form-container
-          h2.heading-secondary.ma-bt-md Configuración de tu cuenta
-
-          //- WITHOUT API 
-          //- enctype='multipart/form-data' allo us to tupload files with the form
+          h2.heading-secondary.ma-bt-md Your account settings
+          
+          //- WITHOUT API
           //- form.form.form-user-data(action='/submit-user-data' method='POST' enctype='multipart/form-data')
-
+          
           //- WITH API
           form.form.form-user-data
             .form__group
-              label.form__label(for='firstName') Nombre
-              input#firstName.form__input(type='text', value=`${user.firstName}`, required, name='firstName')
-            .form__group
-              label.form__label(for='lastName') Apellido
-              input#lastName.form__input(type='text', value=`${user.lastName}`, required, name='lastName')  
+              label.form__label(for='name') Name
+              input#name.form__input(type='text', value=`${user.name}`, required, name='name')
             .form__group.ma-bt-md
-              label.form__label(for='email') Correo electrónico
+              label.form__label(for='email') Email address
               input#email.form__input(type='email', value=`${user.email}`, required, name='email')
-            .form__group.ma-bt-md
-              label.form__label(for='travelAgencyName') Nombre de su agencia de viajes
-              input#travelAgencyName.form__input(type='text', value=`${user.travelAgencyName}`, required, name='email')
-            .form__group
+            .form__group.form__photo-upload
               img.form__user-photo(src=`/img/users/${user.photo}`, alt='User photo')
-              // this input allow us to upload imagenes, the name attribute is photo because its 
-              // the name of the of the field in the User document and it's use by multer
-              label(for='photo' class="form__label") Actualizar foto
-              input.form_upload(type='file', accept='image/*', id='photo', name='photo' class='form__photo__button')
+              input.form__upload(type='file', accept='image/*', id='photo', name='photo')
+              label(for='photo') Choose new photo
+              
             .form__group.right
-              button.btn.btn--small.btn--green Guardar cambios
-
+              button.btn.btn--small.btn--green Save settings
+              
         .line &nbsp;
         
         .user-view__form-container
-          h2.heading-secondary.ma-bt-md Cambiar contraseña
+          h2.heading-secondary.ma-bt-md Password change
           form.form.form-user-password
             .form__group
-              label.form__label(for='password-current') Contraseña actual
+              label.form__label(for='password-current') Current password
               input#password-current.form__input(type='password', placeholder='••••••••', required, minlength='8')
             .form__group
-              label.form__label(for='password') Nueva contraseñas
-              input#password.form__input(type='password', placeholder='••••••••', required, minlength='8', autocomplete="none")
+              label.form__label(for='password') New password
+              input#password.form__input(type='password', placeholder='••••••••', required, minlength='8')
             .form__group.ma-bt-lg
-              label.form__label(for='password-confirm') Confirmar contraseña
-              input#password-confirm.form__input(type='password', placeholder='••••••••', required, minlength='8', autocomplete="none")
+              label.form__label(for='password-confirm') Confirm password
+              input#password-confirm.form__input(type='password', placeholder='••••••••', required, minlength='8')
             .form__group.right
-              button.btn.btn--small.btn--green.btn--save-password Guardar contraseña
+              button.btn.btn--small.btn--green.btn--save-password Save password

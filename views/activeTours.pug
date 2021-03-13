@@ -1,0 +1,12 @@
+extends accountBase
+
+block accountBaseContent
+
+    - if(tours.length === 0)
+      .user-view__content
+          .user-view__form-container
+            h2.heading-secondary.ma-bt-md Agregue sus tours 
+            p.content_text Cada vez está más cerca de su primera venta, haga clic en el botón para agregar un tour.
+            a(href='/createTour' class='btn btn--small btn--green') Agregar tour
+    
+

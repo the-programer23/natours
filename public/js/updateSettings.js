@@ -1,28 +1,25 @@
 /* eslint-disable */
-import '@babel/polyfill';
 import axios from 'axios';
-import {
-    showAlert
-} from './alert';
+import { showAlert } from './alerts';
 
-//type is eather 'contraseña' or 'datos'
+// type is either 'password' or 'data'
 export const updateSettings = async (data, type) => {
-    try {
-        const url = type === 'contraseña' ? '/api/v1/users/updateMyPassword' :
-            '/api/v1/users/updateMe'
+  try {
+    const url =
+      type === 'password'
+        ? '/api/v1/users/updateMyPassword'
+        : '/api/v1/users/updateMe';
 
-        const res = await axios({
-            method: 'PATCH',
-            url,
-            data
-        })
-        if (res.data.status === 'success' && type === 'contraseña') {
-            showAlert('success', 'Su contraseña se actualizó correctamente');
-        } else if (res.data.status === 'success' && type === 'datos') {
-            showAlert('success', 'Sus datos se actualizaron exitosamente');
-        }
+    const res = await axios({
+      method: 'PATCH',
+      url,
+      data
+    });
 
-    } catch (err) {
-        showAlert('error', err.response.data.message);
+    if (res.data.status === 'success') {
+      showAlert('success', `${type.toUpperCase()} updated successfully!`);
     }
-}
+  } catch (err) {
+    showAlert('error', err.response.data.message);
+  }
+};
